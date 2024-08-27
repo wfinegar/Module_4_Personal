@@ -1,8 +1,8 @@
 ---
 title: "MB5370 Module 04. Workshop 1 - Introduction"
-author: "Ben Cresswell"
+author: "Will Finegar"
 output: html_document
-date: "2024-03-22"
+date: "2024-08-26"
 ---
 
 ```{r setup, include=FALSE}
@@ -37,7 +37,7 @@ ggplot(data = mpg) +
   geom_point(mapping = aes(x = disp, y = hwy))
 ```
 
-The plot shows a negative relationship between engine size (displ) and fuel efficiency (hwy). In other words, cars with big engines use more fuel. What does this say about fuel efficiency and engine size?
+The plot shows a negative relationship between engine size (displ) and fuel efficiency (hwy). In other words, cars with big engines use more fuel. AS engine size increases, fuel efficiency decreases.
 
 
 
@@ -134,6 +134,8 @@ ggplot(data = mpg) +
 # Exercise:
 Read ?facet_wrap. What does nrow do? What does ncol do? What other options control the layout of the individual panels? 
 
+# Answer:
+nrow determines the number of rows the graphs are displayed in. ncol determines the number of columns the graphs are displayed in. as.table will cause the graphs to be layed out as a table and dir will change the direction.
 ```{r}
 
 ```

@@ -1,0 +1,51 @@
+---
+title: "Fixing_a_Plot"
+author: "Will Finegar"
+date: "2024-08-27"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+## install.packages("tidyverse") # Delete this line once installed
+library("tidyverse")
+library("ggthemes")
+```
+# Remaking a plot
+plot sourced from: https://www.nature.com/articles/s41597-024-03694-2/figures/1
+
+This is a PCA plot showing differences in the secondary metabolite components of Arabidopsis accessions for two different amounts of darkness exposure. This plot has issues with varying levels of transparency of dots as well as overlapping dots making the data a little confusing to look at.
+
+To fix this we first gathered the data using plot digitizer into 6 csv files. The files were then gathered into one dataframe in R and renamed columns as needed.
+```{r, results='hide'}
+df0d <- read.csv("0d.csv", header = FALSE)
+df0d_col <- read.csv("0d-Col-O.csv", header = FALSE)
+df0d_Ex <- read.csv("0d-ExQC.csv", header = FALSE)
+df6d <- read.csv("6d.csv", header = FALSE)
+df6d_Col <- read.csv("6d-Col-O.csv", header = FALSE)
+df6d_Ex <- read.csv("6d-ExQC.csv", header = FALSE)
+df <- bind_rows(df0d, df0d_col, df0d_Ex, df6d, df6d_Col, df6d_Ex, .id = "id")
+names(df)[2] <- "x"
+names(df)[3] <- "y"
+```
+
+We then create a new version of the plot aiming to improve the theme, clarity, and visibility of data points.
+
+```{r, echo=FALSE}
+ggplot(data = df, mapping = aes(x = x, y = y)) +
+  geom_point(mapping = aes(color = id), position = "jitter") +
+  labs(title = "Metabolite Levels Scores Plot", 
+       x = "PC 1 (77.5%)", 
+       y = "PC 2 (6.4%)", 
+       color = "Legend") +
+  scale_color_hue(labels = c("0d", "0d-Col-O", "0d-ExQC", "6d", "6d-Col-O", "6d-ExQC")) +
+  theme_clean() +
+  theme(axis.text.x = element_text(size = 14), axis.title.x = element_text(size = 14),
+        axis.text.y = element_text(size = 14), axis.title.y = element_text(size = 14),
+        plot.title = element_text(size = 20, face = "bold"))
+```
