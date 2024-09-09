@@ -1,0 +1,19 @@
+---
+title: "Data Wrangling Assignment"
+author: "Will Finegar"
+date: "2024-09-09"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+
+We are using data from QFISH. This data is on the catch and effort from commercial harvest fisheries in Queensland from 1990 onwards.
+```{r, warning=FALSE, results='hide'}
+library(tidyverse)
+library(readr)
+df <- read_csv("export.csv", col_types = cols(...4 = col_skip()), na = c("N/A", ""))
+```
+Looking at the data we first want to lengthen the data so that 
